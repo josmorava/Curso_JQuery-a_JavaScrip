@@ -1,0 +1,20 @@
+¿que es jQuery? es una librería en específico de JS que ayuda a resolver problemas:
+!) Acceder a los datos de una manera más directa en el DOM
+    -Planteaba hacerlo de una manera en distintos navegadores
+
+!)  Interactuar con datos del servidor
+    -$.ajax()
+
+!) Animaciones
+    -resolver el acces a animaciones dentro de la web
+
+Problemas con la cantidad de pluggins ya que hacía todo el trbajo
+Dejar de difenciar jQuery de JS
+    aprender más de js que jQuery
+
+No depender de alguna librería
+
+- VENTAJAS DE APREDNDER JS
+Rutilizar conocimiento en otros lados de tu aplicación
+Poder implementar soluciones din depender de una librería 
+Estar más capacitado para grandes empresas
