@@ -48,3 +48,30 @@ Promise.race([
   .catch(function(message){
     console.log(message)
   })
+
+
+//Forma de traer datos de un servidor externo con jQery, ta,bioen conocido como un XMLHttpRequest
+  $.ajax('https://randomuser.me/api', {
+    method: 'GET',
+    success : function(data){
+      console.log(data)
+    },
+    error : function(error){
+      console.log(error)
+    }
+  })
+
+
+
+//Forma de traer datos de un servidor externo utilizando el método vanilla por defecto, esto devuelve una promesa
+fetch('https://randomuser.me/api')
+  .then(function(response){
+    // console.log(response)
+    return response.json()
+  })
+  .then(function(user){
+    console.log('user', user.results[0].name.first)
+  })
+  .catch(function(){
+    console.log('algo fallo')
+  })
