@@ -93,4 +93,23 @@ Promise.race([
   console.log('dramaList', dramaList)
     console.log('actionList', actionList)
     console.log('animationList', animationList)
+
+  //Forma de traer un selector de html/css
+//  const $home =  $('.home');
+ const $modal = document.getElementById('modal')
+ const $overlay = document.getElementById('overlay')
+ const $hideModal = document.getElementById('hide-modal')
+ 
+
+ const $modalImg = $modal.querySelector('img')
+ const $modalTitle = $modal.querySelector('h1')
+ const $modalDescription = $modal.querySelector('p')
+
+ const $featuringContainer = document.getElementById('#featuring')
+ const $form = document.getElementById('#form')
+ const $home = document.getElementById('#home')
+
+ const $actionContainer = document.querySelector('#action')
+ const $dramaContainer = document.getElementById('#drama')
+ const $animationContainer = document.getElementById('#animation')
 }) ()
