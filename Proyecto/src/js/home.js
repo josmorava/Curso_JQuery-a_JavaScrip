@@ -107,24 +107,31 @@ function videoItemTemplate(movie){
   )
 }
 
-const $actionContainer = document.querySelector('#action')
 
-//Función que muestra la lista de las peliculas de accion
-actionList.data.movies.forEach((movie) => {
-  const HTMLString = videoItemTemplate(movie) 
-
-  
-  //Forma de crear un elemento html dentro de javascript
+function createTemplate(HTMLString){
   const html = document.implementation.createHTMLDocument()
-  
-  //Forma de agregar etiquetas html y contenido dentro del mismo, siempre y cuando se vaya a hacer el elemento sea un html.
-  html.body.innerHTML = HTMLString
-  
-  //'.append' permite aggregar contenido al final del elemento seleccionado, en este caso se van a agregar la lista de las peliculas al final de la const HTMLString que es el template de las peliculas.
-  $actionContainer.append(html.body.children[0]) 
-  
-  console.log(HTMLString)
-})
+  html.body.innerHTML = HTMLString;
+  return html.body.children[0];
+}
+
+function renderMovieList(list, $container){
+  // actionList.data.movies
+  $container.children[0].remove();//Eliminar reload
+  list.forEach((movie) => {
+    const HTMLString = videoItemTemplate(movie) 
+    const movieElement = createTemplate(HTMLString)
+    $container.append(movieElement) 
+  })
+}
+
+const $actionContainer = document.querySelector('#action')
+renderMovieList(actionList.data.movies,$actionContainer)
+
+const $dramaContainer = document.getElementById('drama')
+renderMovieList(dramaList.data.movies,$dramaContainer)
+
+const $animationContainer = document.getElementById('animation')
+renderMovieList(animationList.data.movies,$animationContainer)
 
   //Forma de traer un selector de html/css
 //  const $home =  $('.home');
@@ -142,8 +149,6 @@ actionList.data.movies.forEach((movie) => {
  const $home = document.getElementById('#home')
 
  
- const $dramaContainer = document.getElementById('#drama')
- const $animationContainer = document.getElementById('#animation')
 
 // function videoItemTemplate(src,title){
 //   return (
