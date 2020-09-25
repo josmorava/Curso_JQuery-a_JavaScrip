@@ -47,7 +47,7 @@ Promise.race([
   })
   .catch(function(message){
     console.log(message)
-  })
+  });
 
 
 //Forma de traer datos de un servidor externo con jQery, ta,bioen conocido como un XMLHttpRequest
@@ -59,12 +59,12 @@ Promise.race([
     error : function(error){
       console.log(error)
     }
-  })
+  });
 
 
 
 //Forma de traer datos de un servidor externo utilizando el método vanilla por defecto, esto devuelve una promesa
-fetch('https://randomuser.me/api')
+/*fetch('https://randomuser.me/api')
   .then(function(response){
     // console.log(response)
     return response.json()
@@ -74,4 +74,23 @@ fetch('https://randomuser.me/api')
   })
   .catch(function(){
     console.log('algo fallo')
-  })
+  });*/
+
+//Funciones asincronas
+(async function load () {
+  // await 
+  //asction
+  //terror
+  //animation
+  async function getData(url){  
+    const response = await fetch(url)
+    const data = await response.json()
+    return data;
+  }
+  const actionList =await getData('https://yts.mx/api/v2/list_movies.json?genre=action')
+  const dramaList= await getData('https://yts.mx/api/v2/list_movies.json?genre=drama')
+  const animationList= await getData('https://yts.mx/api/v2/list_movies.json?genre=animation')
+  console.log('dramaList', dramaList)
+    console.log('actionList', actionList)
+    console.log('animationList', animationList)
+}) ()
