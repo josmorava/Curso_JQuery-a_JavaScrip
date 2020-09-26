@@ -89,9 +89,14 @@ Promise.race([
   }
 
   const $form = document.getElementById('form');
+ const $home = document.getElementById('home')
+
  $form.addEventListener('submit', (event) =>{
   event.preventDefault();//quita la recarga al submit
+  $home.classList.add('search-active')
  }) 
+
+
 
   const actionList =await getData('https://yts.mx/api/v2/list_movies.json?genre=action')
   const dramaList= await getData('https://yts.mx/api/v2/list_movies.json?genre=drama')
@@ -122,7 +127,7 @@ function createTemplate(HTMLString){
 
 function addEventClick($element){
   $element.addEventListener('click', () =>{
-    alert('click')
+    showModal() //funcion para mostrar el modal
   })
 
 }
@@ -158,12 +163,18 @@ renderMovieList(animationList.data.movies,$animationContainer)
  const $modalTitle = $modal.querySelector('h1')
  const $modalDescription = $modal.querySelector('p')
 
- const $featuringContainer = document.getElementById('#featuring')
+ const $featuringContainer = document.getElementById('featuring')
 
+function showModal (){
+  $overlay.classList.add('active')
+  $modal.style.animation = 'modalIn .8s forwards'
+}
 
- const $home = document.getElementById('#home')
-
- 
+ $hideModal.addEventListener('click', hideModal)
+ function hideModal (){
+  $overlay.classList.remove('active')
+  $modal.style.animation = 'modalOut .8s forwards'
+ }
 
 // function videoItemTemplate(src,title){
 //   return (
