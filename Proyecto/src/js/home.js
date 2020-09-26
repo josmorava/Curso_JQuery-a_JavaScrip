@@ -146,10 +146,11 @@ $form.addEventListener('submit', async (event) =>{
   const animationList= await getData(`${BASE_API}list_movies.json?genre=animation`)
 
 
-function videoItemTemplate(movie){
+function videoItemTemplate(movie, category){
   return (
-`<div class="primaryPlaylistItem">
+`<div class="primaryPlaylistItem" data-id="${movie.id}" data-category="${category}">
   <div class="primaryPlaylistItem-image">
+    
     <img src="${movie.medium_cover_image}">
   </div>
   <h4 class="primaryPlaylistItem-title">
@@ -168,16 +169,16 @@ function createTemplate(HTMLString){
 
 function addEventClick($element){
   $element.addEventListener('click', () =>{
-    showModal() //funcion para mostrar el modal
+    showModal($element) //funcion para mostrar el modal
   })
 
 }
 
-function renderMovieList(list, $container){
+function renderMovieList(list, $container, category){
   // actionList.data.movies
   $container.children[0].remove();//Eliminar reload
   list.forEach((movie) => {
-    const HTMLString = videoItemTemplate(movie) 
+    const HTMLString = videoItemTemplate(movie, category) 
     const movieElement = createTemplate(HTMLString)
     $container.append(movieElement)
     addEventClick(movieElement) 
@@ -185,13 +186,13 @@ function renderMovieList(list, $container){
 }
 
 const $actionContainer = document.querySelector('#action')
-renderMovieList(actionList.data.movies,$actionContainer)
+renderMovieList(actionList.data.movies,$actionContainer, 'action')
 
 const $dramaContainer = document.getElementById('drama')
-renderMovieList(dramaList.data.movies,$dramaContainer)
+renderMovieList(dramaList.data.movies,$dramaContainer, 'drama')
 
 const $animationContainer = document.getElementById('animation')
-renderMovieList(animationList.data.movies,$animationContainer)
+renderMovieList(animationList.data.movies,$animationContainer, 'animation')
 
   //Forma de traer un selector de html/css
 //  const $home =  $('.home');
@@ -205,9 +206,11 @@ renderMovieList(animationList.data.movies,$animationContainer)
  const $modalDescription = $modal.querySelector('p')
 
 
-function showModal (){
+function showModal ($element){
   $overlay.classList.add('active')
   $modal.style.animation = 'modalIn .8s forwards'
+  const id = $element.dataset.id;
+  const category = $element.dataset.category;
 }
 
  $hideModal.addEventListener('click', hideModal)
