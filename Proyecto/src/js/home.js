@@ -90,10 +90,27 @@ Promise.race([
 
   const $form = document.getElementById('form');
  const $home = document.getElementById('home')
+ const $featuringContainer = document.getElementById('featuring')
 
- $form.addEventListener('submit', (event) =>{
+
+ //Agregando atributos css 
+function setAttributes($element, attributes){
+  for(const attribute in attributes){
+    $element.setAttribute(attribute, attributes[attribute]);
+  }
+}
+
+//Evento de busqueda en la barra de website
+$form.addEventListener('submit', (event) =>{
   event.preventDefault();//quita la recarga al submit
   $home.classList.add('search-active')
+  const $loader = document.createElement('img');
+  setAttributes($loader, {
+    src : 'src/images/loader.gif',
+    height: 50,
+    width: 50,
+  })
+  $featuringContainer.append($loader);
  }) 
 
 
@@ -163,7 +180,6 @@ renderMovieList(animationList.data.movies,$animationContainer)
  const $modalTitle = $modal.querySelector('h1')
  const $modalDescription = $modal.querySelector('p')
 
- const $featuringContainer = document.getElementById('featuring')
 
 function showModal (){
   $overlay.classList.add('active')
