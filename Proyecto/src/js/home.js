@@ -132,9 +132,9 @@ $form.addEventListener('submit', async (event) =>{
 
   //FormData permite extraer datos de un formulario para agregar nuevos
   const data = new FormData($form)
-  const peli = await getData(`${BASE_API}list_movies.json?limit=1&query_term=${data.get('name')}`) //Constante de las busqueda de las peliculas en el form
+  const {data: {movies: pelis}} = await getData(`${BASE_API}list_movies.json?limit=1&query_term=${data.get('name')}`) //Constante de las busqueda de las peliculas en el form
 
-  const HTMLString = featuringTemplate(peli.data.movies[0])
+  const HTMLString = featuringTemplate(pelis[0])
   $featuringContainer.innerHTML = HTMLString;
   
  }) 
