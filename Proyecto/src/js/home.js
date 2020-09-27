@@ -140,12 +140,6 @@ $form.addEventListener('submit', async (event) =>{
  }) 
 
 
-
-  const { data : {movies : actionList}} =await getData(`${BASE_API}list_movies.json?genre=action`)
-  const {data:{movies: dramaList}}= await getData(`${BASE_API}list_movies.json?genre=drama`)
-  const {data :{movies : animationList}}= await getData(`${BASE_API}list_movies.json?genre=animation`)
-
-
 function videoItemTemplate(movie, category){
   return (
 `<div class="primaryPlaylistItem" data-id="${movie.id}" data-category="${category}">
@@ -181,18 +175,29 @@ function renderMovieList(list, $container, category){
     const HTMLString = videoItemTemplate(movie, category) 
     const movieElement = createTemplate(HTMLString)
     $container.append(movieElement)
+    const image = movieElement.querySelector('img')
+    image.addEventListener('load' , (event) =>{
+      event.srcElement.classList.add('fadeIn')
+    })
     addEventClick(movieElement) 
   })
 }
 
+const { data : {movies : actionList}} =await getData(`${BASE_API}list_movies.json?genre=action`)
 const $actionContainer = document.querySelector('#action')
 renderMovieList(actionList,$actionContainer, 'action')
 
+const {data:{movies: dramaList}}= await getData(`${BASE_API}list_movies.json?genre=drama`)
 const $dramaContainer = document.getElementById('drama')
 renderMovieList(dramaList,$dramaContainer, 'drama')
 
+const {data :{movies : animationList}}= await getData(`${BASE_API}list_movies.json?genre=animation`)
 const $animationContainer = document.getElementById('animation')
 renderMovieList(animationList,$animationContainer, 'animation')
+
+
+
+
 
   //Forma de traer un selector de html/css
 //  const $home =  $('.home');
