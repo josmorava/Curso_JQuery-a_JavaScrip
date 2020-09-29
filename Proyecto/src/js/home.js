@@ -83,17 +83,61 @@ Promise.race([
   //terror
   //animation
   async function getData(url){  
-    const response = await fetch(url)
-    const data = await response.json()
-     if (data.data.movie_cout > 0){
-       return data;
+    const response = await fetch(url);
+    const data = await response.json();
+    if (data.data.movie_count > 0){
+      return data;
     }
-    throw new Error ('No se encontró ningun resultado')
+    throw new Error ('No se encontro ningun resultado');
+    return data
   }
 
   const $form = document.getElementById('form');
  const $home = document.getElementById('home')
  const $featuringContainer = document.getElementById('featuring')
+ 
+
+
+//Reto modificar la lista de amigos agregandoles datos externos de la APi de ramdonUsers y jugando con ellos.
+/*
+1) traer los datos de la api
+2) indicar donde se agregaran los datos traidos(debe ser dentro del html)
+3) introducir esos datos dentro de html, aquí debe crearse una plantilla e indicar donde se agregaran los datos traidos desde la API.
+4) crear una plantilla donde pase el paso @3
+5) crear una funcion que agregue la platilla en el dom, o lo que se conoce como renderizado.
+6)llamar la funcion
+*/
+
+
+/*const {results:userList} = await getData(`https://randomuser.me/api/?results=8`) //Llamado a la api
+const $users = document.querySelector('.playlistFriends')//declarando donde se guardaran los datos, que será en la clase del CCS con ese nombre 
+
+function userListTemplate (users){
+  return (
+    `
+    <li class="playlistFriends-item">
+              <a href="#">
+                <img src="${users.picture.thumbnail}" alt="Imagen del usuario" />
+                <span>
+                  ${users.name.first} ${users.name.last}
+                </span>
+              </a>
+            </li>
+    `
+  )//Tomando los valores de la API que necesitamos, que son nombre e imagen, los cuales vamos a agregar al DOM
+}
+
+function renderUsers (list, $container){
+  list.forEach((user) => {
+    const plantillaDeUsuario = userListTemplate(user)
+    const userElement = createTemplate(plantillaDeUsuario)
+    $container.append(userElement)//Agregando al final de container el elemento userElement
+  })
+}
+renderUsers(userList,$users )
+*/
+
+
 
 
  //Agregando atributos css 
@@ -141,12 +185,10 @@ $form.addEventListener('submit', async (event) =>{
     $featuringContainer.innerHTML = HTMLString;
 
   } catch (error){
-    alert(error.message)
-    $loader.remove()
-    $home.classList.remove('search-active')
+    alert(error.message);
+    $loader.remove();
+    $home.classList.remove('search-active');
   }
-
-  
  }) 
 
 
@@ -164,10 +206,15 @@ function videoItemTemplate(movie, category){
   )
 }
 
-
+//funcion que crea una platilla HTML
 function createTemplate(HTMLString){
+
+  //Aquí se indica que se va a implementar un elemento html en el DOM
   const html = document.implementation.createHTMLDocument()
+
+  //Aquí se le indica específicamente en que lugar se va a agregar ese elemento creado, que va a ser en el body 
   html.body.innerHTML = HTMLString;
+
   return html.body.children[0];
 }
 
@@ -193,15 +240,18 @@ function renderMovieList(list, $container, category){
   })
 }
 
-const { data : {movies : actionList}} =await getData(`${BASE_API}list_movies.json?genre=action`)
+const { data : {movies : actionList}} = await getData(`${BASE_API}list_movies.json?genre=action`)
+window.localStorage.setItem('actionList',JSON.stringify(actionList))//Guardando datos con la propiedad local storage
 const $actionContainer = document.querySelector('#action')
 renderMovieList(actionList,$actionContainer, 'action')
 
 const {data:{movies: dramaList}}= await getData(`${BASE_API}list_movies.json?genre=drama`)
+window.localStorage.setItem('dramaList',JSON.stringify( dramaList))
 const $dramaContainer = document.getElementById('drama')
 renderMovieList(dramaList,$dramaContainer, 'drama')
 
 const {data :{movies : animationList}}= await getData(`${BASE_API}list_movies.json?genre=animation`)
+window.localStorage.setItem('animationList',JSON.stringify( animationList))
 const $animationContainer = document.getElementById('animation')
 renderMovieList(animationList,$animationContainer, 'animation')
 
@@ -270,5 +320,6 @@ function showModal ($element){
 //   )
 // }
 // console.log(videoItemTemplate('src/'))
+
 
 }) ()
